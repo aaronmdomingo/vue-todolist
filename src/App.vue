@@ -1,17 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="main">
+      <Todos v-bind:todos="todos" 
+      v-on:deleteTodo="deleteTodo"
+      v-on:addTodo="addTodo"/>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Todos from './components/Todos'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Todos
+  },
+  data() {
+    return {
+      todos: []
+    }
+  },
+  methods: {
+    deleteTodo(id) {
+      this.todos = this.todos.filter(todo => id !== todo.id);
+    },
+    addTodo(toDoObj) {
+      this.todos = [...this.todos, toDoObj];
+    }
+  },
+  created() {
+    fetch('https://jsonplaceholder.typicode.com/todos?_limit=15')
+      .then(res => res.json())
+      .then(res => {
+        this.todos = res;
+      });
   }
 }
 </script>
@@ -23,6 +46,21 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 </style>
