@@ -3,7 +3,8 @@
     <div class="main">
       <Todos v-bind:todos="todos" 
       v-on:deleteTodo="deleteTodo"
-      v-on:addTodo="addTodo"/>
+      v-on:addTodo="addTodo"
+      v-on:searchTodo="searchTodo"/>
     </div>
   </div>
 </template>
@@ -27,6 +28,9 @@ export default {
     },
     addTodo(toDoObj) {
       this.todos = [...this.todos, toDoObj];
+    },
+    searchTodo(searchStr) {
+      this.todos = this.todos.filter(todo => todo.title.includes(searchStr));
     }
   },
   created() {
@@ -35,7 +39,7 @@ export default {
       .then(res => {
         this.todos = res;
       });
-  }
+  },
 }
 </script>
 

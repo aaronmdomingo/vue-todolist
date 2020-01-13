@@ -6,7 +6,7 @@
             </h1>
         </div>
         <div class="searchbar">
-
+            <TodoSearch v-on:searchTodo="searchTodo"/>
         </div>
         <div class="body">
             <div v-bind:key="todo.id" v-for="todo in todos" class="todo">
@@ -22,17 +22,22 @@
 <script>
 import TodoItem from './TodoItem';
 import TodoInput from './TodoInput';
+import TodoSearch from './TodoSearch';
 
 export default {
     name: "Todos",
     components: {
         TodoItem,
-        TodoInput
+        TodoInput,
+        TodoSearch
     },
     props: ["todos"],
     methods: {
         addTodo(toDoObj) {
             this.$emit('addTodo', toDoObj);
+        },
+        searchTodo(searchStr) {
+            this.$emit('searchTodo', searchStr);
         }
     }
 }

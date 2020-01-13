@@ -24,8 +24,8 @@ export default {
                 event.preventDefault();
                 const newTodo = {
                     id: Math.random() * 1000,
-                    name: this.name,
-                    isCompleted: false
+                    title: this.name,
+                    completed: false
                 }
                 this.$emit('addTodo', newTodo);
                 this.name = '';
