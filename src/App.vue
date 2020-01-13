@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="main">
-      <Todos v-bind:todos="todos" 
+      <Todos v-bind:todos="filteredList"
       v-on:deleteTodo="deleteTodo"
       v-on:addTodo="addTodo"
       v-on:searchTodo="searchTodo"/>
@@ -19,6 +19,7 @@ export default {
   },
   data() {
     return {
+      search: '',
       todos: []
     }
   },
@@ -30,7 +31,7 @@ export default {
       this.todos = [...this.todos, toDoObj];
     },
     searchTodo(searchStr) {
-      this.todos = this.todos.filter(todo => todo.title.includes(searchStr));
+      this.search = searchStr;
     }
   },
   created() {
@@ -40,6 +41,11 @@ export default {
         this.todos = res;
       });
   },
+  computed: {
+    filteredList() {
+        return this.todos.filter(todo => todo.title.includes(this.search));
+    }
+  }
 }
 </script>
 
